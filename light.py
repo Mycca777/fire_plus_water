@@ -18,12 +18,12 @@ def find_light_collision(v, mouse_pos, step, mask):
             return find_light_collision(v, prev_cords, step//2, mask)
     return mouse_pos[0] + v[0]*400, mouse_pos[1] + v[1]*400
 
-def cast_light_line(Surface2draw, v,  mouse_pos, mask, step=10):
+def cast_light_line(Surface2draw, v,  mouse_pos, mask, color, step=10):
     cords = find_light_collision(v, mouse_pos, step, mask)
-    pygame.draw.line(Surface2draw, EMBIANT_COLOR, (mouse_pos[0], mouse_pos[1]), cords, 4)
+    pygame.draw.line(Surface2draw, color, (mouse_pos[0], mouse_pos[1]), cords, 4)
     # pygame.draw.circle(Surface2draw, REFLECT_COLOR, cords, 6)
 
-def cast_all_lights(Surface2draw, mouse_pos, mask):
+def cast_all_lights(Surface2draw, mouse_pos, mask, color):
     for a in range(0, 36000,15):
         v = (math.sin(a/(2*math.pi/100)), math.cos(a/(2*math.pi/100)))
-        cast_light_line(Surface2draw, v,  mouse_pos, mask)
+        cast_light_line(Surface2draw, v,  mouse_pos, mask, color)
