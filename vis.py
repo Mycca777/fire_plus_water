@@ -1,6 +1,6 @@
 # огонь и вода
 import pygame
-
+from PIL import Image
 from light import *
 from flame import *
 from Сharacter import *
@@ -44,7 +44,7 @@ all_pos = [(100, 100), (500, 275), (600, 400)]
 flame = [Flame(pos[0], pos[1]) for pos in all_pos]
 motion = None
 character = Character('character.png')
-button_pos = (300, 592)
+button_pos = (300, 591)
 platform_pos_standart = platform_pos = (35, 300)
 counter = 0
 
@@ -73,13 +73,13 @@ while running:
         put_light_source(surf, mask, all_pos[i], EMBIANT_COLOR[random.randint(1, 15)])
         flame[i].draw_flame()
 
+    platform = Platform(platform_pos, mask, screen, platform_pos_standart, counter)
     character.move(motion)
-    color = character.collision(mask)
+    color = character.collision(mask, platform)
     character.isjump = False
     character.draw(surf, screen, color)
     button = Button(button_pos, mask, screen)
     button.is_button_pressed(character)
-    platform = Platform(platform_pos, mask, screen, platform_pos_standart, counter)
     counter, platform_pos = platform.platform_move(button, character)
     if button.is_button_pressed(character):
         put_light_source(surf, mask, (platform_pos[0] + 40, platform_pos[1]+10), (0,100,0))
