@@ -7,10 +7,9 @@ import pygame
 class Character:
     def __init__(self, character_image=None):
         self.character_pos = [100, 550]
-        if character_image:
-            self.character_image = pygame.image.load(character_image).convert_alpha()
-            scale = (60, 70)
-            self.character_image = pygame.transform.scale(self.character_image, scale)
+        self.character_image = pygame.image.load(character_image).convert_alpha()
+        scale = (60, 70)
+        self.character_image = pygame.transform.scale(self.character_image, scale)
         self.hitbox_size = 50
         self.is_touching = [False, False, False, False]
         self.vx = 0
@@ -46,11 +45,11 @@ class Character:
         self.hitbox = pygame.Rect(self.character_pos[0], self.character_pos[1], self.hitbox_size, self.hitbox_size)
 
     def draw(self, surf, screen, color=(255,0,0,200)):
-        pygame.draw.rect(surf, color, (self.character_pos[0]-self.hitbox_size/2, self.character_pos[1]-self.hitbox_size/2, self.hitbox_size, self.hitbox_size),8)
-        # surf.blit(self.character_image, (self.character_pos[0]-27, self.character_pos[1]-38))
+        # pygame.draw.rect(surf, color, (self.character_pos[0]-self.hitbox_size/2, self.character_pos[1]-self.hitbox_size/2, self.hitbox_size, self.hitbox_size),8)
+        surf.blit(self.character_image, (self.character_pos[0]-27, self.character_pos[1]-38))
         screen.blit(surf, (0,0))
 
-    def collision(self, mask):
+    def collision(self, mask, platform):
         touching = False
         self.phisical_hitbox_points = [[self.character_pos[0] - self.hitbox_size/2, self.character_pos[1]],
                                        [self.character_pos[0], self.character_pos[1] - self.hitbox_size/2],
@@ -85,6 +84,9 @@ class Character:
                 if i == 2:
                     # касание нижней
                     self.is_touching[3] = False
+        if platform.collision(self.hitbox):
+            self.is_touching[3] = True
+
         if self.is_touching:
             color = (255, 255, 255)
         else:
