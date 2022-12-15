@@ -55,13 +55,23 @@ class Platform:
                 self.counter += 1
             else:
                 self.platform_pos[1] = self.platform_pos_standart[1] + self.distance_to_move
+            self.image = self.images[1]
             self.draw(self.images[1], self.platform_pos)
         else:
             if self.counter != 0:
                 self.platform_pos[1] += 5*self.counter
                 self.counter -= 1
+            self.image = self.images[0]
             self.draw(self.images[0], self.platform_pos)
-        return self.counter
+        return self.counter, self.platform_pos
+
+    def collision(self, character):
+        character_hitbox = character.hitbox
+        touching = pygame.Rect.colliderect(character_hitbox, self.platform_hitbox)
+        if touching:
+            return True
+        else:
+            return False
 
     def draw(self, image, pos):
         self.surface.blit(image, pos)
