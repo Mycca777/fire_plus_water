@@ -14,6 +14,7 @@ class Character:
         self.is_touching = [False, False, False, False]
         self.vx = 0
         self.vy = 0
+        self.hitbox = pygame.Rect(self.character_pos[0], self.character_pos[1], self.hitbox_size, self.hitbox_size)
 
     def move(self, motion):
         jumpcount = 0
@@ -27,7 +28,6 @@ class Character:
         elif not motion:
             self.vx = 0
         self.character_pos[0] += self.vx
-
 
         if motion == 'UP' and self.is_touching[3]:
             self.vy = 6
@@ -84,7 +84,7 @@ class Character:
                 if i == 2:
                     # касание нижней
                     self.is_touching[3] = False
-        if platform.collision(self.hitbox):
+        if platform.collision(self):
             self.is_touching[3] = True
 
         if self.is_touching:

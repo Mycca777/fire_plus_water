@@ -3,7 +3,7 @@ import pygame
 from PIL import Image
 from light import *
 from flame import *
-from Сharacter import *
+from character import *
 from button import *
 
 

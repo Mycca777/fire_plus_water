@@ -6,6 +6,7 @@ import pygame
 
 BUTTON_FILES = ['button_casual.png', 'button_pressed.png']
 
+
 class Button:
     def __init__(self, button_pos, mask, surface):
         self.surface = surface
@@ -14,7 +15,7 @@ class Button:
         self.images.append(pygame.image.load('button_casual.png').convert_alpha())
         self.images.append(pygame.image.load('button_pressed.png').convert_alpha())
         for i in range(len(self.images)):
-            self.images[i] = pygame.transform.scale(self.images[i], (40,10))
+            self.images[i] = pygame.transform.scale(self.images[i], (40, 10))
         self.button_hitbox = pygame.Rect(self.button_pos[0] + 15, self.button_pos[1] + 13, 30, 10)
 
     def is_button_pressed(self, character):
@@ -75,4 +76,3 @@ class Platform:
 
     def draw(self, image, pos):
         self.surface.blit(image, pos)
-
