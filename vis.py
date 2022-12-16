@@ -48,6 +48,9 @@ character1 = Character('ogon.png')
 button_pos = (300, 592)
 platform_pos_standart = platform_pos = (35, 300)
 counter = 0
+is_there_flames = 1
+clock = pygame.time.Clock()
+FPS = 10
 
 
 while running:
@@ -71,15 +74,18 @@ while running:
                 motion = 'UP'
             if e.key == pygame.K_w:
                 motion1 = 'UP'
-        # elif e.key == pygame.K_DOWN:
-            #     motion = 'DOWN'
+            if e.key == pygame.K_f:
+                is_there_flames *= -1
         elif e.type == pygame.KEYUP:
             motion = None
             motion1 = None
     # screen.blit(mask.image, character)
-    for i in range(len(all_pos)):
-        put_light_source(surf, mask, all_pos[i], EMBIANT_COLOR[random.randint(1, 15)])
-        flame[i].draw_flame()
+    if is_there_flames > 0:
+        for i in range(len(all_pos)):
+            put_light_source(surf, mask, all_pos[i], EMBIANT_COLOR[random.randint(1, 15)])
+            flame[i].draw_flame()
+    else:
+        clock.tick(FPS)
     platform = Platform(platform_pos, mask, screen, platform_pos_standart, counter)
     character.move(motion)
     character1.move(motion1)
